@@ -1,0 +1,10 @@
+.task {
+    padding: 10px;
+
+    border: 1px solid #a1a1a1;
+    border-radius: 5px;
+}
+
+.task > .title {
+    margin-bottom: 5px;
+}
