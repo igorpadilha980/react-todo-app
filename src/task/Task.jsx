@@ -1,4 +1,4 @@
-import './styles/task.css'
+import './task.css'
 
 function Task({ title, description }) {
     return (

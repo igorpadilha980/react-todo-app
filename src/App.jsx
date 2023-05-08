@@ -1,21 +1,19 @@
-import { useState } from 'react'
-import Task from './task/Task'
 import TaskForm from './task/TaskForm'
+import useTaskList from './task/TaskList'
 
 function App() {
-  const [ tasks, setTasks ] = useState([
-    <Task title="Task to do" description="test" />
+  const { TaskList, tasks, addTask } = useTaskList([
+    {
+      id: 1,
+      title: 'Task to do',
+      description: 'test'
+    }
   ])
-
-  const addTask = (task) => {
-    task = <Task {...task} />
-    setTasks([ task, ...tasks ])
-  }
 
   return (
     <>
       <TaskForm onSubmit={addTask}/>
-      { tasks }
+      <TaskList tasks={tasks}/>
     </>
   )
 }
