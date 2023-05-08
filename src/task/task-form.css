@@ -1,0 +1,12 @@
+.task-form {
+    display: flex;
+
+    flex-direction: column;
+    gap: 5px;
+
+    width: 50%;
+}
+
+.task-form input {
+    display: block;
+}
