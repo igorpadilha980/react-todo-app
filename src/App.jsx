@@ -1,15 +1,12 @@
 import { useState } from 'react'
+
 import TaskForm from './task/TaskForm'
 import TaskList from './task/TaskList'
 
+import taskService from './task/task-service'
+
 function App() {
-  const [ tasks, setTasks ] = useState([
-    {
-      id: 1,
-      title: 'Task to do',
-      description: 'test'
-    }
-  ])
+  const [ tasks, setTasks ] = useState(taskService.allTasks())
 
   const newTask = (task) => {
     setTasks([ task, ...tasks ])
