@@ -12,14 +12,15 @@ function App() {
     setTasks([ task, ...tasks ])
   }
 
-  const logTaskChange = (taskId, newStatus) => {
-    console.log(`tasks ${taskId} status: ${newStatus}`)
+  const taskChange = (taskId, newStatus) => {
+    taskService.updateTaskStatus(taskId, newStatus)
+    setTasks(taskService.allTasks())
   }
 
   return (
     <>
       <TaskForm onSubmit={newTask}/>
-      <TaskList tasks={tasks} updateTaskStatus={logTaskChange}/>
+      <TaskList tasks={tasks} updateTaskStatus={taskChange}/>
     </>
   )
 }
