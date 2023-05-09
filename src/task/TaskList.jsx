@@ -1,4 +1,3 @@
-import { useState } from "react"
 import Task from "./Task"
 
 function TaskList({tasks}) {
@@ -15,17 +14,4 @@ function TaskList({tasks}) {
     )
 }
 
-
-function useTaskList(content) {
-    const [ tasks, setTasks ] = useState(content? content : [])
-
-    const addTask = (task) => setTasks([ ...tasks, task ])
-
-    return { 
-        addTask, 
-        TaskList,
-        tasks
-    }
-}
-
-export default useTaskList
+export default TaskList
