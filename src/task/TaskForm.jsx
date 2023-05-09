@@ -8,7 +8,6 @@ function TaskForm({ onSubmit }) {
 
     const handleSubmit = (submitEvent) => {
         onSubmit({
-            id: Date.now(),
             title: title,
             description: description
         })

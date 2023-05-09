@@ -9,7 +9,8 @@ function App() {
   const [ tasks, setTasks ] = useState(taskService.allTasks())
 
   const newTask = (task) => {
-    setTasks([ task, ...tasks ])
+    taskService.createTask(task)
+    setTasks(taskService.allTasks())
   }
 
   const taskChange = (taskId, newStatus) => {
