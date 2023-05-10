@@ -18,9 +18,11 @@ function allTasks() {
 }
 
 function createTask(taskData) {
-    console.log("creating task:", taskData)
+    taskData.id = Date.now();
+    taskData.completed = false;
 
-    tasks.set(tasks.size+1, taskData)
+    console.log("creating task:", taskData)
+    tasks.set(taskData.id, taskData)
 }
 
 function updateTaskStatus(taskId, newStatus) {
@@ -30,8 +32,15 @@ function updateTaskStatus(taskId, newStatus) {
     task.completed = newStatus
 }
 
+function deleteTask(taskId) {
+    console.log(`deleting task ${taskId}`)
+
+    tasks.delete(taskId)
+}
+
 export default {
     allTasks,
     updateTaskStatus,
-    createTask
+    createTask,
+    deleteTask
 }

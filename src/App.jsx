@@ -18,10 +18,15 @@ function App() {
     setTasks(taskService.allTasks())
   }
 
+  const deleteTask = (taskId) => {
+    taskService.deleteTask(taskId)
+    setTasks(taskService.allTasks())
+  }
+
   return (
     <>
       <TaskForm onSubmit={newTask}/>
-      <TaskList tasks={tasks} updateTaskStatus={taskChange}/>
+      <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask}/>
     </>
   )
 }
