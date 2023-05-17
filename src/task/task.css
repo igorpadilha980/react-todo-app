@@ -1,3 +1,7 @@
+.task {
+    height: 60px;
+}
+
 .task > .title {
     margin-bottom: 5px;
 }

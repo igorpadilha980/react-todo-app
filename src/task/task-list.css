@@ -1,16 +1,32 @@
 .task-list {
     display: flex;
     flex-direction: column;
+
+    padding: 5px 10px;
+
+    width: 50%;
 }
 
 .task-list .item {
     display: flex;
 
+    flex-direction: row;
     align-items: start;
+    justify-content: space-between;
 
     padding: 10px;
     gap: 10px;
 
     border: 1px solid #a1a1a1;
     border-radius: 5px;
+}
+
+.item > .status {
+    scale: 1.2;
+
+    accent-color: green;
+}
+
+.item > .task {
+    flex: 5;
 }

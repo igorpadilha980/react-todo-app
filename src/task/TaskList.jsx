@@ -14,9 +14,11 @@ function TaskListItem({ task, onStatusUpdate, onRemove }) {
 
     return (
         <li key={task.id} className="item">
-            <input type="checkbox" checked={task.completed} onChange={handleStatusChange}/>
-            <Task {...task}/>
-            <button onClick={handleDeleteClick}>Delete</button>    
+            <input type="checkbox" checked={task.completed} onChange={handleStatusChange} className="status"/>
+            <Task {...task} className="task"/>
+            <div className="options">
+                <button onClick={handleDeleteClick}>Delete</button>    
+            </div>
         </li>
     )
 }
