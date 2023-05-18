@@ -1,34 +1,39 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Navbar } from './page/Navbar'
 
 import TaskForm from './task/TaskForm'
 import TaskList from './task/TaskList'
 
-import taskService from './task/task-service'
-
-import { firebaseApp } from './firebase/firebase'
+import taskService from './task/service'
 
 import './app.css'
 
+function fetchTasks(updateFunction) {
+  taskService.allTasks().then(updateFunction)
+}
+
 function App() {
-  const [tasks, setTasks] = useState(taskService.allTasks())
+  const [tasks, setTasks] = useState([])
+
+  useEffect(() => fetchTasks(setTasks), [])
 
   const newTask = (task) => {
     taskService.createTask(task)
-    setTasks(taskService.allTasks())
-
-    dialogRef.current.close()
+      .then(createdTask => {
+        setTasks([ createdTask, ...tasks ])
+        dialogRef.current.close()
+      })
   }
 
   const taskChange = (taskId, newStatus) => {
     taskService.updateTaskStatus(taskId, newStatus)
-    setTasks(taskService.allTasks())
+      .then(() => fetchTasks(setTasks))
   }
 
   const deleteTask = (taskId) => {
     taskService.deleteTask(taskId)
-    setTasks(taskService.allTasks())
+      .then(() => fetchTasks(setTasks))
   }
 
   const dialogRef = useRef()
