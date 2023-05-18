@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 
+import { Navbar } from './page/Navbar'
+
 import TaskForm from './task/TaskForm'
 import TaskList from './task/TaskList'
 
@@ -39,6 +41,8 @@ function App() {
 
   return (
     <main class='page-layout'>
+      <Navbar />
+
       <dialog ref={dialogRef}>
         <button onClick={closeForm}>Close</button>
         <TaskForm onSubmit={newTask}/>

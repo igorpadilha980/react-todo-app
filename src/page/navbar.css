@@ -1,0 +1,10 @@
+.navbar {
+    width: 100%;
+    padding: 5px;
+
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    
+    background-color: rgb(164, 164, 255);
+}
