@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import TaskForm from './task/TaskForm'
 import TaskList from './task/TaskList'
 
 import taskService from './task/task-service'
+
+import './app.css'
 
 function App() {
   const [ tasks, setTasks ] = useState(taskService.allTasks())
@@ -11,6 +13,8 @@ function App() {
   const newTask = (task) => {
     taskService.createTask(task)
     setTasks(taskService.allTasks())
+
+    dialogRef.current.close()
   }
 
   const taskChange = (taskId, newStatus) => {
@@ -23,11 +27,27 @@ function App() {
     setTasks(taskService.allTasks())
   }
 
+  const dialogRef = useRef()
+
+  const openForm = () => {
+    dialogRef.current.showModal()
+  }
+
+  const closeForm = () => {
+    dialogRef.current.close()
+  }
+
   return (
-    <>
-      <TaskForm onSubmit={newTask}/>
+    <main class='page-layout'>
+      <dialog ref={dialogRef}>
+        <button onClick={closeForm}>Close</button>
+        <TaskForm onSubmit={newTask}/>
+      </dialog>
+
+      <button onClick={openForm}>Click</button>
+      
       <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask}/>
-    </>
+    </main>
   )
 }
 

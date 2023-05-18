@@ -7,11 +7,15 @@ function TaskForm({ onSubmit }) {
     const [description, setDescription] = useState('')
 
     const handleSubmit = (submitEvent) => {
+        if (!onSubmit)
+            return;
+
         onSubmit({
             title: title,
             description: description
         })
 
+        submitEvent.target.reset()
         submitEvent.preventDefault()
     }
 
