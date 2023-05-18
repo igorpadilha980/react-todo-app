@@ -10,7 +10,7 @@ import taskService from './task/task-service'
 import './app.css'
 
 function App() {
-  const [ tasks, setTasks ] = useState(taskService.allTasks())
+  const [tasks, setTasks] = useState(taskService.allTasks())
 
   const newTask = (task) => {
     taskService.createTask(task)
@@ -40,18 +40,19 @@ function App() {
   }
 
   return (
-    <main class='page-layout'>
+    <section class='page-layout'>
       <Navbar />
 
       <dialog ref={dialogRef}>
         <button onClick={closeForm}>Close</button>
-        <TaskForm onSubmit={newTask}/>
+        <TaskForm onSubmit={newTask} />
       </dialog>
 
-      <button onClick={openForm}>Click</button>
-      
-      <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask}/>
-    </main>
+      <main class="tasks-display">
+        <button onClick={openForm}>Add task</button>
+        <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask} />
+      </main>
+    </section>
   )
 }
 
