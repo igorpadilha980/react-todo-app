@@ -7,6 +7,8 @@ import TaskList from './task/TaskList'
 
 import taskService from './task/task-service'
 
+import { firebaseApp } from './firebase/firebase'
+
 import './app.css'
 
 function App() {
@@ -40,7 +42,7 @@ function App() {
   }
 
   return (
-    <section class='page-layout'>
+    <section className='page-layout'>
       <Navbar />
 
       <dialog ref={dialogRef}>
@@ -48,7 +50,7 @@ function App() {
         <TaskForm onSubmit={newTask} />
       </dialog>
 
-      <main class="tasks-display">
+      <main className="tasks-display">
         <button onClick={openForm}>Add task</button>
         <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask} />
       </main>
