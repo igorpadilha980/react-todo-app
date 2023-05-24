@@ -1,8 +1,9 @@
+import { useAuth } from './auth/AuthContext'
 import { layout, loginForm } from './login.module.css'
-import { login } from './auth/auth'
 import { useNavigate } from 'react-router-dom'
 
 function LoginPage() {
+    const { signIn } = useAuth()
     const navigate = useNavigate()
 
     const handleSubmit = (submitEvent) => {
@@ -11,7 +12,7 @@ function LoginPage() {
         const email = formData.get('email')
         const password = formData.get('password')
 
-        login(email, password)
+        signIn(email, password)
             .then(() => navigate('/'))
             .catch(() => alert('Invalid credentials'))
 

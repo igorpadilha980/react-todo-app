@@ -8,13 +8,23 @@ import TaskList from './task/TaskList'
 import taskService from './task/service'
 
 import './app.css'
+import { useAuth } from './auth/AuthContext'
+import { Navigate } from 'react-router-dom'
 
 function fetchTasks(updateFunction) {
   taskService.allTasks().then(updateFunction)
 }
 
 function App() {
+  const { isSigned, user } = useAuth()
   const [tasks, setTasks] = useState([])
+
+  if (isSigned()) {
+    console.log(user)
+  } else {
+    console.log('Login required to access home')
+    return <Navigate to="/login"/>
+  }
 
   useEffect(() => fetchTasks(setTasks), [])
 
