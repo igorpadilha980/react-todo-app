@@ -1,23 +1,6 @@
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { auth, firestore } from '../firebase/firebase.js'
-import { doc, getDoc } from 'firebase/firestore'
-
-function docToUser(document) {
-    const data = document.data()
-
-    return {
-        id: document.id,
-        username: data.username,
-        email: data.email
-    }
-}
-
-async function fetchUser(uid) {
-    console.trace('fetching user data')
-    const userDoc = doc(firestore, 'users', uid);
-
-    return getDoc(userDoc).then(docToUser)
-}
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { auth } from '../firebase/firebase.js'
+import { createUser, fetchUser } from '../user/user.js'
 
 async function login(email, password) {
     return signInWithEmailAndPassword(auth, email, password)
@@ -28,7 +11,13 @@ async function logout() {
     return signOut(auth)
 }
 
+async function registerUser(username, email, password) {
+    return createUserWithEmailAndPassword(auth, email, password)
+        .then((credential) => createUser(credential.user.uid, username, email))
+}
+
 export {
     login,
-    logout
+    logout,
+    registerUser
 }
