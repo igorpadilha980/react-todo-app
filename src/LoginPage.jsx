@@ -1,6 +1,6 @@
 import { useAuth } from './auth/AuthContext'
 import { layout, dataForm } from './user-data-form.module.css'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function LoginPage() {
     const { signIn } = useAuth()
@@ -36,6 +36,7 @@ function LoginPage() {
                         <input type="password" name="password" placeholder="Yout Password" required />
                     </label>
                     <button>Login</button>
+                    <span>Doesn't have an account? Register <Link to="/signup">here</Link></span>
                 </form>
             </main>
         </section>

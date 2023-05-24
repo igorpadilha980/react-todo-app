@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from './auth/AuthContext'
 import { layout, dataForm } from './user-data-form.module.css'
 
@@ -41,6 +41,7 @@ function SignUpPage() {
                         <input type="password" name="password" placeholder="Yout Password" required />
                     </label>
                     <button>Sign up</button>
+                    <span>Already have an account? Log in <Link to="/login">here</Link></span>
                 </form>
             </main>
         </section>
