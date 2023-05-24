@@ -1,7 +1,9 @@
 import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { firestore } from '../firebase/firebase'
 
-const taskCollection = collection(firestore, 'tasks')
+function taskCollection(userId) {
+    return collection(firestore, 'users', userId, 'tasks')
+}
 
 function docToTask(document) {
     const data = document.data()
@@ -14,8 +16,8 @@ function docToTask(document) {
     }
 }
 
-async function allTasks() {
-    const search = query(taskCollection);
+async function allTasks(userId) {
+    const search = query(taskCollection(userId));
 
     return getDocs(search)
             .then(snapshot => snapshot.docs)
@@ -24,11 +26,11 @@ async function allTasks() {
             })
 }
 
-async function createTask(taskData) {
+async function createTask(userId, taskData) {
     const newTask = { ...taskData, completed: false }
     console.log("creating task: ", newTask)
 
-    return addDoc(taskCollection, newTask)
+    return addDoc(taskCollection(userId), newTask)
         .then(docRef => docRef.id)
         .then(id => {
             newTask.id = id
@@ -36,17 +38,17 @@ async function createTask(taskData) {
         })
 }
 
-async function updateTaskStatus(taskId, newStatus) {
+async function updateTaskStatus(userId, taskId, newStatus) {
     console.log(`updating task ${taskId}, status: ${newStatus}`)
 
-    const taskRef = doc(firestore, taskCollection.path, taskId)
+    const taskRef = doc(firestore, taskCollection(userId).path, taskId)
     return updateDoc(taskRef, { completed: newStatus })
 }
 
-async function deleteTask(taskId) {
+async function deleteTask(userId, taskId) {
     console.log(`deleting task ${taskId}`)
 
-    const taskRef = doc(firestore, taskCollection.path, taskId)
+    const taskRef = doc(firestore, taskCollection(userId).path, taskId)
     return deleteDoc(taskRef)
 }
 

@@ -11,27 +11,26 @@ import './app.css'
 import { useAuth } from './auth/AuthContext'
 import { Navigate } from 'react-router-dom'
 
-function fetchTasks(updateFunction) {
-  taskService.allTasks().then(updateFunction)
+function fetchTasks(user, updateFunction) {
+  if (user)
+    taskService.allTasks(user.id).then(updateFunction)
 }
 
 function App() {
   const { isSigned, user } = useAuth()
   const [tasks, setTasks] = useState([])
 
-  useEffect(() => fetchTasks(setTasks), [])
+  useEffect(() => fetchTasks(user, setTasks), [])
   const dialogRef = useRef()
 
 
-  if (isSigned()) {
-    console.log(user)
-  } else {
+  if (!isSigned()) {
     console.log('Login required to access home')
     return <Navigate to="/login" />
   }
 
   const newTask = (task) => {
-    taskService.createTask(task)
+    taskService.createTask(user.id, task)
       .then(createdTask => {
         setTasks([ createdTask, ...tasks ])
         dialogRef.current.close()
@@ -39,13 +38,13 @@ function App() {
   }
 
   const taskChange = (taskId, newStatus) => {
-    taskService.updateTaskStatus(taskId, newStatus)
-      .then(() => fetchTasks(setTasks))
+    taskService.updateTaskStatus(user.id, taskId, newStatus)
+      .then(() => fetchTasks(user, setTasks))
   }
 
   const deleteTask = (taskId) => {
-    taskService.deleteTask(taskId)
-      .then(() => fetchTasks(setTasks))
+    taskService.deleteTask(user.id, taskId)
+      .then(() => fetchTasks(user, setTasks))
   }
 
   const openForm = () => {
