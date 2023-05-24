@@ -19,14 +19,16 @@ function App() {
   const { isSigned, user } = useAuth()
   const [tasks, setTasks] = useState([])
 
+  useEffect(() => fetchTasks(setTasks), [])
+  const dialogRef = useRef()
+
+
   if (isSigned()) {
     console.log(user)
   } else {
     console.log('Login required to access home')
-    return <Navigate to="/login"/>
+    return <Navigate to="/login" />
   }
-
-  useEffect(() => fetchTasks(setTasks), [])
 
   const newTask = (task) => {
     taskService.createTask(task)
@@ -45,8 +47,6 @@ function App() {
     taskService.deleteTask(taskId)
       .then(() => fetchTasks(setTasks))
   }
-
-  const dialogRef = useRef()
 
   const openForm = () => {
     dialogRef.current.showModal()
