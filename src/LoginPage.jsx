@@ -1,16 +1,19 @@
 import { layout, loginForm } from './login.module.css'
+import { login } from './auth/auth'
+import { useNavigate } from 'react-router-dom'
 
 function LoginPage() {
+    const navigate = useNavigate()
+
     const handleSubmit = (submitEvent) => {
         const formData = new FormData(submitEvent.target)
 
         const email = formData.get('email')
         const password = formData.get('password')
 
-        console.log({
-            email,
-            password
-        })
+        login(email, password)
+            .then(() => navigate('/'))
+            .catch(() => alert('Invalid credentials'))
 
         submitEvent.preventDefault()
     }
