@@ -22,7 +22,7 @@
     text-align: center;
 }
 
-.login-form {
+.data-form {
     display: flex;
     flex-direction: column;
 
@@ -31,11 +31,11 @@
     gap: 20px;
 }
 
-.login-form > label {
+.data-form > label {
     width: 50%;
 }
 
-.login-form > label > input {
+.data-form > label > input {
     display: block;
     width: 100%;
 }

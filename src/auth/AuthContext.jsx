@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react"
-import { login, logout } from './auth'
+import { login, logout, registerUser } from './auth'
 
 const authContext = createContext()
 
@@ -13,6 +13,13 @@ function AuthProvider({ children }) {
 
     const signOut = async () => logout().then(() => setUser(null))
 
+    const signUp = async (username, email, password) => {
+        return registerUser(username, email, password).then((user) => {
+            console.trace('setting user: ', user)
+            setUser(user)
+        })
+    }
+
     const isSigned = () => user != null
 
     return (
@@ -20,6 +27,7 @@ function AuthProvider({ children }) {
             user,
             signIn,
             signOut,
+            signUp,
             isSigned
         }}>
             {children}
