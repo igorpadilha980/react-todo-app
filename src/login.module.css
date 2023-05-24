@@ -1,0 +1,41 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+
+    background-color: whitesmoke;
+}
+
+.layout > main {
+    width: 50%;
+    height: 50%;
+
+    background-color: white;
+    border-radius: 10px;
+}
+
+.layout > main > h1 {
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.login-form > label {
+    width: 50%;
+}
+
+.login-form > label > input {
+    display: block;
+    width: 100%;
+}
