@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from "@firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "@firebase/firestore";
 import { initializeTestEnvironment } from "@firebase/rules-unit-testing";
 import { afterAll, afterEach, assert, describe, expect, test } from "vitest";
 
@@ -81,5 +81,18 @@ describe('rules test suite', () => {
         const request = getDocs(tasksCollection).then(snap => snap.docs);
 
         expect(request).resolves.toHaveLength(1)
+    })
+
+    test('if owner user can update status of task', async () => {
+        const taskRef = doc(firestore, 'users', testUserId, 'tasks', 'user-task');
+
+        await setDoc(taskRef, {
+            title: 'Task',
+            description: 'Test task',
+            completed: false
+        })
+
+        const request = updateDoc(taskRef, { completed: true });
+        await request.catch(() => assert(false, 'failed to update task data'))
     })
 })

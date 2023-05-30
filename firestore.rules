@@ -8,9 +8,10 @@ service cloud.firestore {
       function canAccess() {
         return request.auth != null && request.auth.uid == userId;
       }
-      
+
       match /tasks/{taskId} {
         allow delete, read: if canAccess();
+        allow update: if canAccess() && canUpdate();
         allow create: if canAccess() && hasTaskFormat(request.resource.data);
 
         function hasTaskFormat(data) {
@@ -18,6 +19,10 @@ service cloud.firestore {
             data.title is string && 
             data.description is string &&
             data.completed is bool;
+        }
+
+        function canUpdate() {
+          return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['completed'])
         }
       }
     }
