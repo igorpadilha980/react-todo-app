@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterAll, afterEach, describe, expect, it, vi } from 'vitest'
 
 import { initializeTestEnvironment } from '@firebase/rules-unit-testing'
 import { doc, setDoc } from 'firebase/firestore'
@@ -20,8 +20,12 @@ describe('user service suite', async () => {
         firestore
     }))
 
-    beforeEach(async () => {
+    afterEach(async () => {
         await testEnv.clearFirestore()
+    })
+
+    afterAll(async () => {
+        await testEnv.cleanup()
     })
 
     const { fetchUser, createUser } = await import('../src/user/user')
