@@ -1,7 +1,29 @@
+rules_version = '2'
+
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow get, write: if canAccess();
+
+      function canAccess() {
+        return request.auth != null && request.auth.uid == userId;
+      }
+
+      match /tasks {
+        allow read: if canAccess();
+
+        match /{taskId} {
+          allow delete: if canAccess();
+          allow create: if canAccess() && hasTaskFormat(request.resource.data);
+
+          function hasTaskFormat(data) {
+            return data.keys().hasOnly(['title', 'description', 'completed']) && 
+              data.title is string && 
+              data.description is string &&
+              data.completed is bool;
+          }
+        }
+      }
     }
   }
 }
