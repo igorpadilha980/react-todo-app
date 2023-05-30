@@ -8,8 +8,8 @@
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "firebase --project test-app emulators:exec \"npx vitest --run\"",
-    "test:watch": "firebase --project test-app emulators:exec \"npx vitest --watch\""
+    "test": "firebase --project test-app emulators:exec \"npx vitest --run --no-threads\"",
+    "test:watch": "firebase --project test-app emulators:exec \"npx vitest --watch --no-threads\""
   },
   "dependencies": {
     "firebase": "^9.22.0",
