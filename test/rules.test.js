@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "@firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from "@firebase/firestore";
 import { initializeTestEnvironment } from "@firebase/rules-unit-testing";
 import { afterAll, afterEach, assert, describe, expect, test } from "vitest";
 
@@ -67,5 +67,19 @@ describe('rules test suite', () => {
         
         const request = deleteDoc(doc(firestore, 'users', testUserId, 'tasks', taskId));
         await request.catch(e => assert(false, e.message))
+    })
+
+    test('if can list tasks of user', async () => {
+        const tasksCollection = collection(firestore, 'users', testUserId, 'tasks');
+
+        await addDoc(tasksCollection, {
+            title: 'Task',
+            description: 'Test task',
+            completed: false
+        })
+
+        const request = getDocs(tasksCollection).then(snap => snap.docs);
+
+        expect(request).resolves.toHaveLength(1)
     })
 })

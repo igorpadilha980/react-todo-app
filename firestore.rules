@@ -8,20 +8,16 @@ service cloud.firestore {
       function canAccess() {
         return request.auth != null && request.auth.uid == userId;
       }
+      
+      match /tasks/{taskId} {
+        allow delete, read: if canAccess();
+        allow create: if canAccess() && hasTaskFormat(request.resource.data);
 
-      match /tasks {
-        allow read: if canAccess();
-
-        match /{taskId} {
-          allow delete: if canAccess();
-          allow create: if canAccess() && hasTaskFormat(request.resource.data);
-
-          function hasTaskFormat(data) {
-            return data.keys().hasOnly(['title', 'description', 'completed']) && 
-              data.title is string && 
-              data.description is string &&
-              data.completed is bool;
-          }
+        function hasTaskFormat(data) {
+          return data.keys().hasOnly(['title', 'description', 'completed']) && 
+            data.title is string && 
+            data.description is string &&
+            data.completed is bool;
         }
       }
     }
