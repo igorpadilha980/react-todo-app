@@ -28,7 +28,6 @@ async function allTasks(userId) {
 
 async function createTask(userId, taskData) {
     const newTask = { ...taskData, completed: false }
-    console.log("creating task: ", newTask)
 
     return addDoc(taskCollection(userId), newTask)
         .then(docRef => docRef.id)
@@ -39,15 +38,11 @@ async function createTask(userId, taskData) {
 }
 
 async function updateTaskStatus(userId, taskId, newStatus) {
-    console.log(`updating task ${taskId}, status: ${newStatus}`)
-
     const taskRef = doc(firestore, taskCollection(userId).path, taskId)
     return updateDoc(taskRef, { completed: newStatus })
 }
 
 async function deleteTask(userId, taskId) {
-    console.log(`deleting task ${taskId}`)
-
     const taskRef = doc(firestore, taskCollection(userId).path, taskId)
     return deleteDoc(taskRef)
 }
