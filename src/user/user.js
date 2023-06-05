@@ -14,8 +14,6 @@ function docToUser(document) {
 }
 
 async function fetchUser(userId) {
-    console.log('fetching user data from ' + userId)
-
     const userDoc = doc(firestore, userCollection.path, userId)
     return getDoc(userDoc).then(docToUser)
 }
