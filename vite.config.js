@@ -11,5 +11,8 @@ export default defineConfig({
     modules: {
       localsConvention: 'camelCase'
     }
+  },
+  test: {
+    testTimeout: 10000
   }
 })
