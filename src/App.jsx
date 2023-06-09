@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Navbar } from './page/Navbar'
 
-import TaskForm from './task/TaskForm'
+import TaskForm from './components/TaskForm'
 import TaskList from './components/TaskList'
 
 import taskService from './task/service'
