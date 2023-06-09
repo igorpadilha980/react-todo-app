@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Navbar } from './page/Navbar'
+import Navbar from '../components/Navbar'
+import TaskForm from '../components/TaskForm'
+import TaskList from '../components/TaskList'
 
-import TaskForm from './task/TaskForm'
-import TaskList from './task/TaskList'
-
-import taskService from './task/service'
+import taskService from '../services/tasks'
 
 import './app.css'
-import { useAuth } from './auth/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { Navigate } from 'react-router-dom'
 
 function fetchTasks(user, updateFunction) {

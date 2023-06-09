@@ -1,6 +1,6 @@
 import './task.css'
 
-function Task({ title, description }) {
+function TaskCard({ title, description }) {
     return (
         <div className="task">
             <h3 className="title">{title}</h3>
@@ -9,4 +9,4 @@ function Task({ title, description }) {
     )
 }
 
-export default Task;
+export default TaskCard;

@@ -16,7 +16,7 @@ describe('user service suite', async () => {
     const app = testEnv.authenticatedContext(testUserId)
     const firestore = app.firestore()
 
-    vi.doMock('../src/firebase/firebase', () => ({
+    vi.doMock('../src/services/firebase', () => ({
         firestore
     }))
 
@@ -28,7 +28,7 @@ describe('user service suite', async () => {
         await testEnv.cleanup()
     })
 
-    const { fetchUser, createUser } = await import('../src/user/user')
+    const { fetchUser, createUser } = await import('../src/services/user')
 
     it("should fail when reading other's profile", async () => {
         const request = fetchUser('different-user')

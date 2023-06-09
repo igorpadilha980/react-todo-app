@@ -1,5 +1,5 @@
 import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc } from 'firebase/firestore';
-import { firestore } from '../firebase/firebase'
+import { firestore } from './firebase'
 
 function taskCollection(userId) {
     return collection(firestore, 'users', userId, 'tasks')

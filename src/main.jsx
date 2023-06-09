@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import LoginPage from './LoginPage.jsx'
+import App from './pages/App.jsx'
+import LoginPage from './pages/LoginPage.jsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import './index.css'
-import { AuthProvider } from './auth/AuthContext.jsx'
-import { SignUpPage } from './SignUpPage.jsx'
+import { AuthProvider } from './contexts/AuthContext.jsx'
+import { SignUpPage } from './pages/SignUpPage.jsx'
 
 const router = createBrowserRouter([
   {
