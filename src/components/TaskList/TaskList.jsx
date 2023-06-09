@@ -1,4 +1,4 @@
-import TaskCard from "../../task/TaskCard"
+import TaskCard from "../TaskCard"
 
 import './task-list.css'
 
