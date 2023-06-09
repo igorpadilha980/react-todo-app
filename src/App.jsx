@@ -4,7 +4,7 @@ import Navbar from './components/Navbar'
 import TaskForm from './components/TaskForm'
 import TaskList from './components/TaskList'
 
-import taskService from './task/service'
+import taskService from './services/tasks'
 
 import './app.css'
 import { useAuth } from './auth/AuthContext'
