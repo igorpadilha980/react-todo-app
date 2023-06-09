@@ -5,7 +5,7 @@ import LoginPage from './LoginPage.jsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import './index.css'
-import { AuthProvider } from './auth/AuthContext.jsx'
+import { AuthProvider } from './contexts/AuthContext.jsx'
 import { SignUpPage } from './SignUpPage.jsx'
 
 const router = createBrowserRouter([

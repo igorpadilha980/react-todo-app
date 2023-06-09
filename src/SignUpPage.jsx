@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from './auth/AuthContext'
+import { useAuth } from './contexts/AuthContext'
 import { layout, dataForm } from './user-data-form.module.css'
 
 function SignUpPage() {

@@ -7,7 +7,7 @@ import TaskList from './components/TaskList'
 import taskService from './services/tasks'
 
 import './app.css'
-import { useAuth } from './auth/AuthContext'
+import { useAuth } from './contexts/AuthContext'
 import { Navigate } from 'react-router-dom'
 
 function fetchTasks(user, updateFunction) {
