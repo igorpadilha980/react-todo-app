@@ -1,4 +1,4 @@
-import Task from "../../task/Task"
+import TaskCard from "../../task/TaskCard"
 
 import './task-list.css'
 
@@ -15,7 +15,7 @@ function TaskListItem({ task, onStatusUpdate, onRemove }) {
     return (
         <li key={task.id} className="item">
             <input type="checkbox" checked={task.completed} onChange={handleStatusChange} className="status"/>
-            <Task {...task} className="task"/>
+            <TaskCard {...task} className="task"/>
             <div className="options">
                 <button onClick={handleDeleteClick}>Delete</button>    
             </div>
