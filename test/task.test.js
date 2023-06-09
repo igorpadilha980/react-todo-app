@@ -14,7 +14,7 @@ describe('task service suite', async () => {
     const app = testEnv.authenticatedContext(testUserId)
     const firestore = app.firestore()
 
-    vi.doMock('../src/firebase/firebase', () => {
+    vi.doMock('../src/services/firebase', () => {
         return {
             firestore
         }
@@ -24,7 +24,7 @@ describe('task service suite', async () => {
         await testEnv.clearFirestore()
     })
 
-    const { default: taskService } = await import('../src/task/service')
+    const { default: taskService } = await import('../src/services/tasks')
 
     test('if creates add task to user', async () => {
         const savedTask = await taskService.createTask(testUserId, testTaskData);
