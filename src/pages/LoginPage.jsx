@@ -1,10 +1,13 @@
 import { useAuth } from '../contexts/AuthContext'
 import { layout, dataForm } from './user-data-form.module.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 function LoginPage() {
-    const { signIn } = useAuth()
+    const { signIn, isSigned } = useAuth()
     const navigate = useNavigate()
+
+    if (isSigned())
+        return <Navigate to="/" />
 
     const handleSubmit = (submitEvent) => {
         const formData = new FormData(submitEvent.target)
