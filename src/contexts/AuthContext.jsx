@@ -1,10 +1,12 @@
-import { createContext, useContext, useState } from "react"
-import { login, logout, registerUser } from '../services/auth'
+import { createContext, useContext, useEffect, useState } from "react"
+import { login, logout, registerUser, watchAuthChange } from '../services/auth'
 
 const authContext = createContext()
 
 function AuthProvider({ children }) {
     const [ user, setUser ] = useState(null)
+
+    useEffect(() => watchAuthChange(setUser), [])
 
     const signIn = async (email, password) => {
         return login(email, password)
@@ -20,7 +22,7 @@ function AuthProvider({ children }) {
         })
     }
 
-    const isSigned = () => user != null
+    const isSigned = () => user != null && user != undefined
 
     return (
         <authContext.Provider value={{
