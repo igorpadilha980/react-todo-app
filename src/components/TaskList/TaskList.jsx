@@ -1,5 +1,7 @@
 import TaskCard from "../TaskCard"
 
+import DeleteIcon from '@mui/icons-material/DeleteSharp';
+
 import './task-list.css'
 
 function TaskListItem({ task, onStatusUpdate, onRemove }) {
@@ -17,7 +19,7 @@ function TaskListItem({ task, onStatusUpdate, onRemove }) {
             <input type="checkbox" checked={task.completed} onChange={handleStatusChange} className="status"/>
             <TaskCard {...task} className="task"/>
             <div className="options">
-                <button onClick={handleDeleteClick}>Delete</button>    
+                <button onClick={handleDeleteClick}><DeleteIcon /></button>    
             </div>
         </li>
     )

@@ -1,8 +1,13 @@
 .task {
-    height: 60px;
+    height: 100%;
 }
 
 .task > .title {
     margin: 0;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.task p {
+    margin: 0;
+    white-space: break-spaces;
 }
