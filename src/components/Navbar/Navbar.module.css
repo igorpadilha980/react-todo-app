@@ -1,0 +1,46 @@
+.navbar {
+    position: sticky;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: clamp(35px, 5svh, 50px);
+    padding: 5px 10px;
+
+    color: black;
+    font-weight: 400;
+
+    background: linear-gradient(to right, white, rgba(223, 255, 194, 0.8), white);
+
+    backdrop-filter: blur(2px);
+    box-shadow: 0px 2px 5px 1px rgba(180, 180, 180, 0.3);
+}
+
+.title {
+    background: none;
+    font-size: 1.5rem;
+}
+
+.navbar button, .navbar a {
+    background-color: white;
+
+    border-radius: 3px;
+    border: 1px solid rgba(22, 45, 0, 0.8);
+
+    min-width: fit-content;
+    width: 70px;
+    
+    padding: 2px 5px;
+
+    color: inherit;
+    font-size: 1.1rem;
+
+    transition: transform 300ms 100ms, box-shadow 500ms;
+}
+
+.navbar button:hover, .navbar a:hover {
+    transform: translateY(-10%);
+    box-shadow: 0px 0px 15px 0px rgba(170, 170, 170, 0.229);
+}
