@@ -63,7 +63,7 @@ function App() {
 
       <dialog ref={dialogRef}>
         <button onClick={closeForm}>Close</button>
-        <TaskForm onSubmit={newTask} />
+        <TaskForm title="New task" submitText={"Save"} onSubmit={newTask} />
       </dialog>
 
       <main className="tasks-display">
