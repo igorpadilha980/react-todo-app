@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext'
 
 import style from './Navbar.module.css'
+import { Button } from '../Button';
 
 function Navbar() {
     const { isSigned, signOut } = useAuth()
@@ -12,7 +13,7 @@ function Navbar() {
             <nav>
                 {
                     isSigned() ?
-                        <button onClick={signOut}>Logout</button> :
+                        <Button action={signOut}>Logout</Button> :
                         <Link to="/login">Login</Link>
                 }
             </nav>
