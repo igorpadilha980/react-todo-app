@@ -9,6 +9,9 @@ import taskService from '../services/tasks'
 import './app.css'
 import { useAuth } from '../contexts/AuthContext'
 import { Navigate } from 'react-router-dom'
+import { Button } from '../components/Button'
+
+import AddIcon from '@mui/icons-material/Add';
 
 function fetchTasks(user, updateFunction) {
   if (user)
@@ -64,7 +67,7 @@ function App() {
       </dialog>
 
       <main className="tasks-display">
-        <button onClick={openForm}>Add task</button>
+        <Button action={openForm} round paddingRight="10px"><AddIcon /> New</Button>
         <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask} />
       </main>
     </section>
