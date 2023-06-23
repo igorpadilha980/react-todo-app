@@ -10,7 +10,7 @@ import { SignUpPage } from './pages/SignUpPage.jsx'
 
 const router = createHashRouter([
   {
-    index: true,
+    index: '/',
     element: <App />
   },
   {
@@ -21,9 +21,7 @@ const router = createHashRouter([
     path: '/signup',
     element: <SignUpPage />,
   }
-], {
-  basename: import.meta.env.VITE_DEPLOY_BASE_URL || '/'
-})
+])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
