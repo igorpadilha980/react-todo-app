@@ -10,3 +10,14 @@
 
     min-width: 50%;
 }
+
+.task-dialog {
+    min-width: max(300px, 40%);
+    min-height: max(200px, 30%);
+
+    max-width: 800px;
+    max-height: 600px;
+
+    width: 450px;
+    height: 350px;
+}
