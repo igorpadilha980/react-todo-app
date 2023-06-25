@@ -12,3 +12,7 @@
 
     margin: 5px 0;
 }
+
+.form :focus-visible {
+    outline: rgba(143, 215, 70, 0.559) solid 2px;
+}
