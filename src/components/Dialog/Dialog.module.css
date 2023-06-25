@@ -1,0 +1,39 @@
+.dialog {
+    padding: 0;
+
+    width: min-content;
+    height: min-content;
+
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.dialog::backdrop {
+    opacity: 0.8;
+}
+
+.content-wrapper {
+    position: relative;
+
+    height: 100%;
+    width: 100%;
+
+    padding: 15px;
+}
+
+.close-dialog {
+    position: absolute;
+    inset: 5px 5px auto auto;
+    
+    display: flex;
+    justify-content: center;
+
+    padding: 0;
+
+    background-color: transparent;
+    border: none
+}
+
+.close-dialog:hover, .close-dialog:focus-visible {
+    outline: rgba(143, 215, 70, 0.559) solid 2px;
+}

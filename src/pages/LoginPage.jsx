@@ -1,47 +1,43 @@
 import { useAuth } from '../contexts/AuthContext'
-import { layout, dataForm } from './user-data-form.module.css'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+
+import Navbar from '../components/Navbar'
+import { Form } from '../components/Form'
+import { FormInput } from '../components/FormInput'
+import { Button } from '../components/Button'
+
+import { layout, userFormWrapper, actionButton, additionalLink } from './user-data-form.module.css'
 
 function LoginPage() {
     const { signIn, isSigned } = useAuth()
-    const navigate = useNavigate()
-
     if (isSigned())
         return <Navigate to="/" />
 
-    const handleSubmit = (submitEvent) => {
-        const formData = new FormData(submitEvent.target)
-
-        const email = formData.get('email')
-        const password = formData.get('password')
-
-        signIn(email, password)
-            .then(() => navigate('/'))
+    const loginRequest = (formData) => {
+        signIn(formData.get('email'), formData.get('password'))
             .catch((e) => {
                 console.error(e)
                 alert('Invalid credentials')
             })
-
-        submitEvent.preventDefault()
     }
 
     return (
         <section className={layout}>
-            <main>
-                <h1>Login for ToDo</h1>
-                <form onSubmit={handleSubmit} className={dataForm}>
-                    <label>
-                        E-mail:
+            <Navbar />
+            <section className={userFormWrapper}>
+                <Form title="Login" onSubmit={loginRequest}>
+                    <FormInput labelText="E-mail">
                         <input type="email" name="email" placeholder="Your account e-mail" required />
-                    </label>
-                    <label>
-                        Password:
+                    </FormInput>
+
+                    <FormInput labelText="Password">
                         <input type="password" name="password" placeholder="Yout Password" required />
-                    </label>
-                    <button>Login</button>
-                    <span>Doesn't have an account? Register <Link to="/signup">here</Link></span>
-                </form>
-            </main>
+                    </FormInput>
+
+                    <Button className={actionButton}>Login</Button>
+                    <span className={additionalLink}>Don&#39;t have an account? Register <Link to="/signup">here</Link></span>
+                </Form>
+            </section>
         </section>
     )
 }

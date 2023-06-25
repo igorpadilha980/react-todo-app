@@ -1,34 +1,36 @@
-import { useState } from "react"
+import { Button } from '../Button'
 
-import './task-form.css'
+import style from './TaskForm.module.css'
 
-function TaskForm({ onSubmit }) {
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-
+function TaskForm({ title, submitText, onSubmit }) {
     const handleSubmit = (submitEvent) => {
+        submitEvent.preventDefault()
+
         if (!onSubmit)
             return;
 
-        onSubmit({
-            title: title,
-            description: description
-        })
+        const data = new FormData(submitEvent.target)
+        onSubmit(Object.fromEntries(data.entries()))
 
         submitEvent.target.reset()
-        submitEvent.preventDefault()
     }
 
-    const updateState = (update) => {
-        return (event) => update(event.target.value)
-    }
-    
     return (
-        <form className="task-form" onSubmit={handleSubmit}>
-            <h3>New task</h3>
-            <input type="text" onChange={updateState(setTitle)} required />
-            <textarea onChange={updateState(setDescription)}></textarea>
-            <button>Add</button>
+        <form className={style.taskForm} onSubmit={handleSubmit}>
+            <h1>{ title }</h1>
+            <label>
+                Task name
+                <input className={style.control} type="text" name="title" placeholder="Task name" required />
+            </label>
+            <label>
+                Description
+                <textarea 
+                    className={style.control} 
+                    name="description" 
+                    placeholder="Description for this task">
+                </textarea>
+            </label>
+            <Button>{ submitText }</Button>
         </form>
     )
 }

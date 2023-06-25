@@ -1,0 +1,37 @@
+.task-form {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+}
+
+.task-form > h1 {
+    font-size: 1.3em;
+    margin: 5px 0;
+}
+
+.task-form :focus-visible {
+    outline: rgba(143, 215, 70, 0.559) solid 2px;
+}
+
+.task-form > label {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1em;
+
+    gap: 7px;
+}
+
+.task-form .control {
+    padding: 5px;
+    font-size: 1rem;
+}
+
+.task-form textarea.control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.task-form > button {
+    float: right;
+}

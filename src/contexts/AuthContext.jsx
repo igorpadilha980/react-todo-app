@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { login, logout, registerUser, watchAuthChange } from '../services/auth'
 
-const authContext = createContext()
+const AuthContext = createContext()
 
 function AuthProvider({ children }) {
     const [ user, setUser ] = useState(null)
@@ -25,7 +25,7 @@ function AuthProvider({ children }) {
     const isSigned = () => user != null && user != undefined
 
     return (
-        <authContext.Provider value={{
+        <AuthContext.Provider value={{
             user,
             signIn,
             signOut,
@@ -33,16 +33,17 @@ function AuthProvider({ children }) {
             isSigned
         }}>
             {children}
-        </authContext.Provider>
+        </AuthContext.Provider>
     ) 
 }
 
 function useAuth() {
-    return useContext(authContext)
+    return useContext(AuthContext)
 }
 
 
 export {
     AuthProvider,
-    useAuth
+    useAuth,
+    AuthContext
 }

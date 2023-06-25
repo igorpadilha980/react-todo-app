@@ -3,12 +3,16 @@ import { useEffect, useRef, useState } from 'react'
 import Navbar from '../components/Navbar'
 import TaskForm from '../components/TaskForm'
 import TaskList from '../components/TaskList'
+import Dialog from '../components/Dialog/Dialog'
 
 import taskService from '../services/tasks'
 
 import './app.css'
 import { useAuth } from '../contexts/AuthContext'
 import { Navigate } from 'react-router-dom'
+import { Button } from '../components/Button'
+
+import AddIcon from '@mui/icons-material/Add';
 
 function fetchTasks(user, updateFunction) {
   if (user)
@@ -20,7 +24,7 @@ function App() {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => fetchTasks(user, setTasks), [])
-  const dialogRef = useRef()
+  const dialogRef = useRef(null)
 
 
   if (!isSigned()) {
@@ -46,25 +50,16 @@ function App() {
       .then(() => fetchTasks(user, setTasks))
   }
 
-  const openForm = () => {
-    dialogRef.current.showModal()
-  }
-
-  const closeForm = () => {
-    dialogRef.current.close()
-  }
-
   return (
     <section className='page-layout'>
       <Navbar />
 
-      <dialog ref={dialogRef}>
-        <button onClick={closeForm}>Close</button>
-        <TaskForm onSubmit={newTask} />
-      </dialog>
+      <Dialog ref={dialogRef} closeAction={() => dialogRef.current.close()} className="task-dialog">
+        <TaskForm title="New task" submitText={"Save"} onSubmit={newTask} />
+      </Dialog>
 
       <main className="tasks-display">
-        <button onClick={openForm}>Add task</button>
+        <Button action={() => dialogRef.current.openModal()} round paddingRight="10px"><AddIcon /> New</Button>
         <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask} />
       </main>
     </section>

@@ -9,9 +9,15 @@
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "firebase --project test-app emulators:exec \"npx vitest --run --no-threads\"",
-    "test:watch": "firebase --project test-app emulators:exec \"npx vitest --watch --no-threads\""
+    "test:watch": "firebase --project test-app emulators:exec \"npx vitest --watch --no-threads\"",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.5",
     "firebase": "^9.22.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -19,6 +25,13 @@
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^2.0.7",
+    "@storybook/addon-essentials": "^7.0.22",
+    "@storybook/addon-interactions": "^7.0.22",
+    "@storybook/addon-links": "^7.0.22",
+    "@storybook/blocks": "^7.0.22",
+    "@storybook/react": "^7.0.22",
+    "@storybook/react-vite": "^7.0.22",
+    "@storybook/testing-library": "^0.0.14-next.2",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
@@ -26,7 +39,10 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "eslint-plugin-storybook": "^0.6.12",
     "firebase-tools": "^12.2.1",
+    "prop-types": "^15.8.1",
+    "storybook": "^7.0.22",
     "vite": "^4.3.2",
     "vitest": "^0.31.1"
   }
