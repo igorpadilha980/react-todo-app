@@ -36,6 +36,7 @@
 
     color: inherit;
     font-size: 1.1rem;
+    text-decoration: none;
 
     transition: transform 300ms 100ms, box-shadow 500ms;
 }
