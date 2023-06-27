@@ -22,22 +22,38 @@ function fetchTasks(user, updateFunction) {
 function App() {
   const { isSigned, user } = useAuth()
   const [tasks, setTasks] = useState([])
-
-  useEffect(() => fetchTasks(user, setTasks), [])
+  const [editingTask, setEditingTask] = useState(null)
   const dialogRef = useRef(null)
 
+  useEffect(() => fetchTasks(user, setTasks), [])
+
+  useEffect(() => {
+    if (editingTask)
+      dialogRef.current.openModal()
+  }, [editingTask])
 
   if (!isSigned()) {
     console.log('Login required to access home')
     return <Navigate to="/login" />
   }
 
-  const newTask = (task) => {
-    taskService.createTask(user.id, task)
-      .then(createdTask => {
-        setTasks([ createdTask, ...tasks ])
-        dialogRef.current.close()
-      })
+  const closeForm = () => {
+    if (editingTask)
+      setEditingTask(null)
+
+    dialogRef.current.close()
+  }
+
+  const submitForm = (task) => {
+    if (editingTask)
+      console.log('Updating task!')
+    else {
+      taskService.createTask(user.id, task)
+        .then(createdTask => {
+          setTasks([createdTask, ...tasks])
+          closeForm()
+        })
+    }
   }
 
   const taskChange = (taskId, newStatus) => {
@@ -54,13 +70,17 @@ function App() {
     <section className='page-layout'>
       <Navbar />
 
-      <Dialog ref={dialogRef} closeAction={() => dialogRef.current.close()} className="task-dialog">
-        <TaskForm title="New task" submitText={"Save"} onSubmit={newTask} />
+      <Dialog ref={dialogRef} closeAction={closeForm} className="task-dialog">
+        <TaskForm
+          title={editingTask ? "Edit task" : "New task"}
+          submitText={editingTask ? "Save changes" : "Save"}
+          data={editingTask}
+          onSubmit={submitForm} />
       </Dialog>
 
       <main className="tasks-display">
         <Button action={() => dialogRef.current.openModal()} round paddingRight="10px"><AddIcon /> New</Button>
-        <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask} />
+        <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask} onEditTask={setEditingTask} />
       </main>
     </section>
   )
