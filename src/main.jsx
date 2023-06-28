@@ -8,12 +8,17 @@ import { RouterProvider, createHashRouter } from 'react-router-dom'
 import './index.css'
 import { AuthProvider } from './contexts/AuthContext.jsx'
 import { SignUpPage } from './pages/SignUpPage.jsx'
+import SelectStorage from './pages/SelectStorage.jsx'
 
 const router = createHashRouter([
   {
     path: '/',
     element: <App />,
     children: [
+      {
+        index: true,
+        element: <SelectStorage />
+      },
       {
         path: 'home',
         element: <Home />
