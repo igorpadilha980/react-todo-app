@@ -12,7 +12,7 @@ function SignUpPage() {
     const { isSigned, signUp } = useAuth()
 
     if (isSigned())
-        return <Navigate to="/" />
+        return <Navigate to="/home" />
 
     const requestRegistration = (formData) => {
         const username = formData.get('username')

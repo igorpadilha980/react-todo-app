@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './pages/App.jsx'
+import Home from './pages/Home.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 
@@ -10,8 +10,8 @@ import { SignUpPage } from './pages/SignUpPage.jsx'
 
 const router = createHashRouter([
   {
-    index: '/',
-    element: <App />
+    path: '/home',
+    element: <Home />
   },
   {
     path: '/login',

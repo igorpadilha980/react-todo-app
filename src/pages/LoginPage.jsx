@@ -11,7 +11,7 @@ import { layout, userFormWrapper, actionButton, additionalLink } from './user-da
 function LoginPage() {
     const { signIn, isSigned } = useAuth()
     if (isSigned())
-        return <Navigate to="/" />
+        return <Navigate to="/home" />
 
     const loginRequest = (formData) => {
         signIn(formData.get('email'), formData.get('password'))

@@ -19,7 +19,7 @@ function fetchTasks(user, updateFunction) {
     taskService.allTasks(user.id).then(updateFunction)
 }
 
-function App() {
+function Home() {
   const { isSigned, user } = useAuth()
   const [tasks, setTasks] = useState([])
   const [editingTask, setEditingTask] = useState(null)
@@ -97,4 +97,4 @@ function App() {
   )
 }
 
-export default App
+export default Home
