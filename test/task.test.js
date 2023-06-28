@@ -1,8 +1,8 @@
 import { initializeTestEnvironment } from '@firebase/rules-unit-testing'
-import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore'
-import { afterAll, afterEach, assert, describe, expect, test, vi } from 'vitest'
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { afterEach, assert, describe, expect, test, vi } from 'vitest'
 
-const testEnv = await initializeTestEnvironment({ projectId: 'todo-app' })
+const testEnv = await initializeTestEnvironment({ projectId: 'test-app' })
 
 describe('task service suite', async () => {
     const testUserId = 'test-user'

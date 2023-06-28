@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, query, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { firestore } from './firebase'
 
 function taskCollection(userId) {
@@ -12,7 +12,9 @@ function docToTask(document) {
         id: document.id,
         title: data.title,
         description: data.description,
-        completed: data.completed
+        completed: data.completed,
+        creationTime: data.creationTime,
+        lastUpdateTime: data.lastUpdateTime
     }
 }
 
@@ -27,7 +29,10 @@ async function allTasks(userId) {
 }
 
 async function createTask(userId, taskData) {
-    const newTask = { ...taskData, completed: false }
+    const newTask = { ...taskData }
+
+    newTask.completed = false
+    newTask.creationTime = serverTimestamp()
 
     return addDoc(taskCollection(userId), newTask)
         .then(docRef => docRef.id)
@@ -39,7 +44,7 @@ async function createTask(userId, taskData) {
 
 async function updateTaskStatus(userId, taskId, newStatus) {
     const taskRef = doc(firestore, taskCollection(userId).path, taskId)
-    return updateDoc(taskRef, { completed: newStatus })
+    return updateDoc(taskRef, { completed: newStatus, lastUpdateTime: serverTimestamp() })
 }
 
 async function deleteTask(userId, taskId) {
