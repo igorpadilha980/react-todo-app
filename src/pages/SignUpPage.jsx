@@ -2,11 +2,10 @@ import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 import { Form } from '../components/Form'
-import { FormInput } from '../components/FormInput' 
+import { FormInput } from '../components/FormInput'
 
-import { layout, userFormWrapper, actionButton, additionalLink } from './user-data-form.module.css'
+import { userFormWrapper, actionButton, additionalLink } from './user-data-form.module.css'
 import { Button } from '../components/Button'
-import Navbar from '../components/Navbar'
 
 function SignUpPage() {
     const { isSigned, signUp } = useAuth()
@@ -20,15 +19,14 @@ function SignUpPage() {
         const password = formData.get('password')
 
         signUp(username, email, password)
-            .catch((e) => { 
+            .catch((e) => {
                 console.error(e)
                 alert('Invalid data')
             })
     }
 
     return (
-        <section className={layout}>
-            <Navbar />
+        <>
             <section className={userFormWrapper}>
                 <Form title="Create account" onSubmit={requestRegistration}>
                     <FormInput labelText="Username">
@@ -47,7 +45,7 @@ function SignUpPage() {
                     <span className={additionalLink}>Already have an account? Login <Link to="/signup">here</Link></span>
                 </Form>
             </section>
-        </section>
+        </>
     )
 }
 

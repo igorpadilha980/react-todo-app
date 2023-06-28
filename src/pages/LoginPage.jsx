@@ -1,12 +1,11 @@
 import { useAuth } from '../contexts/AuthContext'
 import { Link, Navigate } from 'react-router-dom'
 
-import Navbar from '../components/Navbar'
 import { Form } from '../components/Form'
 import { FormInput } from '../components/FormInput'
 import { Button } from '../components/Button'
 
-import { layout, userFormWrapper, actionButton, additionalLink } from './user-data-form.module.css'
+import { userFormWrapper, actionButton, additionalLink } from './user-data-form.module.css'
 
 function LoginPage() {
     const { signIn, isSigned } = useAuth()
@@ -22,8 +21,7 @@ function LoginPage() {
     }
 
     return (
-        <section className={layout}>
-            <Navbar />
+        <>
             <section className={userFormWrapper}>
                 <Form title="Login" onSubmit={loginRequest}>
                     <FormInput labelText="E-mail">
@@ -38,7 +36,7 @@ function LoginPage() {
                     <span className={additionalLink}>Don&#39;t have an account? Register <Link to="/signup">here</Link></span>
                 </Form>
             </section>
-        </section>
+        </>
     )
 }
 

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 
-import Navbar from '../components/Navbar'
 import TaskForm from '../components/TaskForm'
 import TaskList from '../components/TaskList'
 import Dialog from '../components/Dialog/Dialog'
@@ -43,7 +42,7 @@ function Home() {
   }
 
   const closeForm = () => {
-    if (editingTask){
+    if (editingTask) {
       setEditingTask(null)
     }
 
@@ -74,9 +73,7 @@ function Home() {
   }
 
   return (
-    <section className='page-layout'>
-      <Navbar />
-
+    <>
       <Dialog ref={dialogRef} closeAction={closeForm} className="task-dialog">
         <TaskForm
           title={editingTask ? "Edit task" : "New task"}
@@ -87,13 +84,13 @@ function Home() {
 
       <main className="tasks-display">
         <Button action={() => dialogRef.current.openModal()} round paddingRight="10px"><AddIcon /> New</Button>
-        <TaskList 
-          tasks={tasks} 
-          updateTaskStatus={(id, completed) => taskChange(id, { completed })} 
-          onRemoveTask={deleteTask} 
+        <TaskList
+          tasks={tasks}
+          updateTaskStatus={(id, completed) => taskChange(id, { completed })}
+          onRemoveTask={deleteTask}
           onEditTask={setEditingTask} />
       </main>
-    </section>
+    </>
   )
 }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import App from './pages/App.jsx'
 import Home from './pages/Home.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
@@ -10,16 +11,22 @@ import { SignUpPage } from './pages/SignUpPage.jsx'
 
 const router = createHashRouter([
   {
-    path: '/home',
-    element: <Home />
-  },
-  {
-    path: '/login',
-    element: <LoginPage />
-  },
-  {
-    path: '/signup',
-    element: <SignUpPage />,
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: 'home',
+        element: <Home />
+      },
+      {
+        path: 'login',
+        element: <LoginPage />
+      },
+      {
+        path: 'signup',
+        element: <SignUpPage />,
+      }
+    ]
   }
 ])
 
