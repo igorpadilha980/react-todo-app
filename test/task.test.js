@@ -45,11 +45,11 @@ describe('task service suite', async () => {
         expect(taskList).toHaveLength(1)
     })
 
-    test('if updates task status', async () => {
+    test('if updates task data', async () => {
         const task = await taskService.createTask(testUserId, testTaskData)
         const newStatus = true
 
-        await taskService.updateTaskStatus(testUserId, task.id, newStatus)
+        await taskService.updateTask(testUserId, task.id, { completed: newStatus })
 
         const updatedTask = await getDoc(doc(firestore, 'users', testUserId, 'tasks', task.id)).then(doc => doc.data())
         assert(updatedTask.completed == newStatus)

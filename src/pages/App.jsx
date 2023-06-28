@@ -56,8 +56,8 @@ function App() {
     }
   }
 
-  const taskChange = (taskId, newStatus) => {
-    taskService.updateTaskStatus(user.id, taskId, newStatus)
+  const taskChange = (taskId, newData) => {
+    taskService.updateTask(user.id, taskId, newData)
       .then(() => fetchTasks(user, setTasks))
   }
 
@@ -80,7 +80,11 @@ function App() {
 
       <main className="tasks-display">
         <Button action={() => dialogRef.current.openModal()} round paddingRight="10px"><AddIcon /> New</Button>
-        <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask} onEditTask={setEditingTask} />
+        <TaskList 
+          tasks={tasks} 
+          updateTaskStatus={(id, completed) => taskChange(id, { completed })} 
+          onRemoveTask={deleteTask} 
+          onEditTask={setEditingTask} />
       </main>
     </section>
   )

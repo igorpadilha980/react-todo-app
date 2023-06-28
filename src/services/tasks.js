@@ -42,9 +42,9 @@ async function createTask(userId, taskData) {
         })
 }
 
-async function updateTaskStatus(userId, taskId, newStatus) {
+async function updateTask(userId, taskId, taskData) {
     const taskRef = doc(firestore, taskCollection(userId).path, taskId)
-    return updateDoc(taskRef, { completed: newStatus, lastUpdateTime: serverTimestamp() })
+    return updateDoc(taskRef, { ...taskData, lastUpdateTime: serverTimestamp() })
 }
 
 async function deleteTask(userId, taskId) {
@@ -54,7 +54,7 @@ async function deleteTask(userId, taskId) {
 
 export default {
     allTasks,
-    updateTaskStatus,
+    updateTask,
     createTask,
     deleteTask
 }
