@@ -28,6 +28,9 @@ function App() {
   useEffect(() => fetchTasks(user, setTasks), [user])
 
   useEffect(() => {
+    if (!dialogRef.current)
+      return
+
     if (editingTask)
       dialogRef.current.openModal()
     else
@@ -43,6 +46,8 @@ function App() {
     if (editingTask){
       setEditingTask(null)
     }
+
+    dialogRef.current.close()
   }
 
   const submitForm = (task) => {
