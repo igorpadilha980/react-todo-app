@@ -25,11 +25,13 @@ function App() {
   const [editingTask, setEditingTask] = useState(null)
   const dialogRef = useRef(null)
 
-  useEffect(() => fetchTasks(user, setTasks), [])
+  useEffect(() => fetchTasks(user, setTasks), [user])
 
   useEffect(() => {
     if (editingTask)
       dialogRef.current.openModal()
+    else
+      dialogRef.current.close()
   }, [editingTask])
 
   if (!isSigned()) {
@@ -38,15 +40,14 @@ function App() {
   }
 
   const closeForm = () => {
-    if (editingTask)
+    if (editingTask){
       setEditingTask(null)
-
-    dialogRef.current.close()
+    }
   }
 
   const submitForm = (task) => {
     if (editingTask)
-      console.log('Updating task!')
+      taskChange(editingTask.id, task)
     else {
       taskService.createTask(user.id, task)
         .then(createdTask => {
@@ -59,6 +60,7 @@ function App() {
   const taskChange = (taskId, newData) => {
     taskService.updateTask(user.id, taskId, newData)
       .then(() => fetchTasks(user, setTasks))
+      .then(closeForm)
   }
 
   const deleteTask = (taskId) => {
