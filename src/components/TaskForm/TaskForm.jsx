@@ -1,18 +1,24 @@
+import { useEffect, useState } from 'react'
 import { Button } from '../Button'
 
 import style from './TaskForm.module.css'
 
-function TaskForm({ title, submitText, onSubmit }) {
+function TaskForm({ title, submitText, onSubmit, data }) {
+    const [ formData, setFormData ] = useState({})
+
+    useEffect(() => setFormData(data ?? {}), [data])
+
+    const handleChange = (changeEvent) => {
+        const { name, value } = changeEvent.target
+        
+        setFormData({ ...formData, [name]: value })
+    }
+
     const handleSubmit = (submitEvent) => {
-        submitEvent.preventDefault()
-
-        if (!onSubmit)
-            return;
-
-        const data = new FormData(submitEvent.target)
-        onSubmit(Object.fromEntries(data.entries()))
+        onSubmit && onSubmit(formData)
 
         submitEvent.target.reset()
+        submitEvent.preventDefault()
     }
 
     return (
@@ -20,14 +26,23 @@ function TaskForm({ title, submitText, onSubmit }) {
             <h1>{ title }</h1>
             <label>
                 Task name
-                <input className={style.control} type="text" name="title" placeholder="Task name" required />
+                <input 
+                    className={style.control} 
+                    type="text" 
+                    name="title" 
+                    placeholder="Task name"
+                    value={formData?.title || ''}
+                    onChange={handleChange}
+                    required />
             </label>
             <label>
                 Description
                 <textarea 
                     className={style.control} 
                     name="description" 
-                    placeholder="Description for this task">
+                    placeholder="Description for this task"
+                    value={formData?.description || ''}
+                    onChange={handleChange}>
                 </textarea>
             </label>
             <Button>{ submitText }</Button>

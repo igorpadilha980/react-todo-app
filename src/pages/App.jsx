@@ -22,27 +22,45 @@ function fetchTasks(user, updateFunction) {
 function App() {
   const { isSigned, user } = useAuth()
   const [tasks, setTasks] = useState([])
-
-  useEffect(() => fetchTasks(user, setTasks), [])
+  const [editingTask, setEditingTask] = useState(null)
   const dialogRef = useRef(null)
 
+  useEffect(() => fetchTasks(user, setTasks), [user])
+
+  useEffect(() => {
+    if (editingTask)
+      dialogRef.current.openModal()
+    else
+      dialogRef.current.close()
+  }, [editingTask])
 
   if (!isSigned()) {
     console.log('Login required to access home')
     return <Navigate to="/login" />
   }
 
-  const newTask = (task) => {
-    taskService.createTask(user.id, task)
-      .then(createdTask => {
-        setTasks([ createdTask, ...tasks ])
-        dialogRef.current.close()
-      })
+  const closeForm = () => {
+    if (editingTask){
+      setEditingTask(null)
+    }
   }
 
-  const taskChange = (taskId, newStatus) => {
-    taskService.updateTaskStatus(user.id, taskId, newStatus)
+  const submitForm = (task) => {
+    if (editingTask)
+      taskChange(editingTask.id, task)
+    else {
+      taskService.createTask(user.id, task)
+        .then(createdTask => {
+          setTasks([createdTask, ...tasks])
+          closeForm()
+        })
+    }
+  }
+
+  const taskChange = (taskId, newData) => {
+    taskService.updateTask(user.id, taskId, newData)
       .then(() => fetchTasks(user, setTasks))
+      .then(closeForm)
   }
 
   const deleteTask = (taskId) => {
@@ -54,13 +72,21 @@ function App() {
     <section className='page-layout'>
       <Navbar />
 
-      <Dialog ref={dialogRef} closeAction={() => dialogRef.current.close()} className="task-dialog">
-        <TaskForm title="New task" submitText={"Save"} onSubmit={newTask} />
+      <Dialog ref={dialogRef} closeAction={closeForm} className="task-dialog">
+        <TaskForm
+          title={editingTask ? "Edit task" : "New task"}
+          submitText={editingTask ? "Save changes" : "Save"}
+          data={editingTask}
+          onSubmit={submitForm} />
       </Dialog>
 
       <main className="tasks-display">
         <Button action={() => dialogRef.current.openModal()} round paddingRight="10px"><AddIcon /> New</Button>
-        <TaskList tasks={tasks} updateTaskStatus={taskChange} onRemoveTask={deleteTask} />
+        <TaskList 
+          tasks={tasks} 
+          updateTaskStatus={(id, completed) => taskChange(id, { completed })} 
+          onRemoveTask={deleteTask} 
+          onEditTask={setEditingTask} />
       </main>
     </section>
   )

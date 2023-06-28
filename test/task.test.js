@@ -1,8 +1,8 @@
 import { initializeTestEnvironment } from '@firebase/rules-unit-testing'
-import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore'
-import { afterAll, afterEach, assert, describe, expect, test, vi } from 'vitest'
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { afterEach, assert, describe, expect, test, vi } from 'vitest'
 
-const testEnv = await initializeTestEnvironment({ projectId: 'todo-app' })
+const testEnv = await initializeTestEnvironment({ projectId: 'test-app' })
 
 describe('task service suite', async () => {
     const testUserId = 'test-user'
@@ -45,11 +45,11 @@ describe('task service suite', async () => {
         expect(taskList).toHaveLength(1)
     })
 
-    test('if updates task status', async () => {
+    test('if updates task data', async () => {
         const task = await taskService.createTask(testUserId, testTaskData)
         const newStatus = true
 
-        await taskService.updateTaskStatus(testUserId, task.id, newStatus)
+        await taskService.updateTask(testUserId, task.id, { completed: newStatus })
 
         const updatedTask = await getDoc(doc(firestore, 'users', testUserId, 'tasks', task.id)).then(doc => doc.data())
         assert(updatedTask.completed == newStatus)

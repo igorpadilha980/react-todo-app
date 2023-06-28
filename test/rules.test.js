@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "@firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, serverTimestamp, setDoc, updateDoc } from "@firebase/firestore";
 import { initializeTestEnvironment } from "@firebase/rules-unit-testing";
 import { afterAll, afterEach, assert, describe, expect, test } from "vitest";
 
@@ -51,7 +51,8 @@ describe('rules test suite', () => {
         const request = addDoc(collection(firestore, 'users', testUserId, 'tasks'), {
             title: 'Task',
             description: 'Test task',
-            completed: false
+            completed: false,
+            creationTime: serverTimestamp()
         })
 
         await request.catch((e) => assert(false, e.message))
@@ -62,7 +63,8 @@ describe('rules test suite', () => {
         await setDoc(doc(firestore, 'users', testUserId, 'tasks', taskId), {
             title: 'Task',
             description: 'Test task',
-            completed: false
+            completed: false,
+            creationTime: serverTimestamp()
         })
         
         const request = deleteDoc(doc(firestore, 'users', testUserId, 'tasks', taskId));
@@ -75,7 +77,8 @@ describe('rules test suite', () => {
         await addDoc(tasksCollection, {
             title: 'Task',
             description: 'Test task',
-            completed: false
+            completed: false,
+            creationTime: serverTimestamp()
         })
 
         const request = getDocs(tasksCollection).then(snap => snap.docs);
@@ -89,10 +92,11 @@ describe('rules test suite', () => {
         await setDoc(taskRef, {
             title: 'Task',
             description: 'Test task',
-            completed: false
+            completed: false,
+            creationTime: serverTimestamp()
         })
 
-        const request = updateDoc(taskRef, { completed: true });
-        await request.catch(() => assert(false, 'failed to update task data'))
+        const request = updateDoc(taskRef, { completed: true, lastUpdateTime: serverTimestamp() });
+        await request.catch((e) => assert(false, e.message))
     })
 })

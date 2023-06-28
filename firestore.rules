@@ -11,18 +11,23 @@ service cloud.firestore {
 
       match /tasks/{taskId} {
         allow delete, read: if canAccess();
-        allow update: if canAccess() && canUpdate();
-        allow create: if canAccess() && hasTaskFormat(request.resource.data);
+        allow update: if canAccess() && canUpdate(request.resource.data);
+        allow create: if canAccess() && canCreate(request.resource.data);
 
-        function hasTaskFormat(data) {
-          return data.keys().hasOnly(['title', 'description', 'completed']) && 
+        function canCreate(data) {
+          return data.keys().hasAll(['title', 'description', 'completed', 'creationTime']) &&
             data.title is string && 
             data.description is string &&
-            data.completed is bool;
+            data.completed is bool &&
+            data.creationTime == request.time;
         }
 
-        function canUpdate() {
-          return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['completed'])
+        function canUpdate(data) {
+          return data.diff(resource.data).affectedKeys().hasOnly(['title', 'description', 'completed', 'lastUpdateTime']) &&
+            data.get('title', '') is string &&
+            data.get('description', '') is string &&
+            data.get('completed', true) is bool &&
+            data.lastUpdateTime == request.time;
         }
       }
     }

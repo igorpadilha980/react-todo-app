@@ -24,8 +24,9 @@ const Dialog = forwardRef(function Dialog({ children, closeAction, className, ..
             const content = contentRef.current
             const target = clickEvent.target
 
-            if (!content.contains(target))
-                dialogRef.current.close()
+            if (!content.contains(target)) {
+                closeAction && closeAction()
+            }
         })
     }, [])
 
