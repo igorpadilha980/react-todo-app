@@ -31,7 +31,7 @@ function TaskForm({ title, submitText, onSubmit, data }) {
                     type="text" 
                     name="title" 
                     placeholder="Task name"
-                    value={data?.title}
+                    value={formData?.title || ''}
                     onChange={handleChange}
                     required />
             </label>
@@ -41,7 +41,7 @@ function TaskForm({ title, submitText, onSubmit, data }) {
                     className={style.control} 
                     name="description" 
                     placeholder="Description for this task"
-                    value={data?.description}
+                    value={formData?.description || ''}
                     onChange={handleChange}>
                 </textarea>
             </label>
