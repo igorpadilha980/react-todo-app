@@ -44,7 +44,9 @@ async function createTask(userId, taskData) {
 
 async function updateTask(userId, taskId, taskData) {
     const taskRef = doc(firestore, taskCollection(userId).path, taskId)
-    return updateDoc(taskRef, { ...taskData, lastUpdateTime: serverTimestamp() })
+    const { id, creationTime, ...cleanData} = taskData
+
+    return updateDoc(taskRef, { ...cleanData, lastUpdateTime: serverTimestamp() })
 }
 
 async function deleteTask(userId, taskId) {
