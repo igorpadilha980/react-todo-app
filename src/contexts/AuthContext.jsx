@@ -4,20 +4,19 @@ import { login, logout, registerUser, watchAuthChange } from '../services/auth'
 const AuthContext = createContext()
 
 function AuthProvider({ children }) {
-    const [ user, setUser ] = useState(null)
+    const [user, setUser] = useState(undefined)
 
     useEffect(() => watchAuthChange(setUser), [])
 
     const signIn = async (email, password) => {
         return login(email, password)
-                .then(setUser)
+            .then(setUser)
     }
 
     const signOut = async () => logout().then(() => setUser(null))
 
     const signUp = async (username, email, password) => {
         return registerUser(username, email, password).then((user) => {
-            console.trace('setting user: ', user)
             setUser(user)
         })
     }
@@ -34,7 +33,7 @@ function AuthProvider({ children }) {
         }}>
             {children}
         </AuthContext.Provider>
-    ) 
+    )
 }
 
 function useAuth() {
