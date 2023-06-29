@@ -7,7 +7,7 @@ import Dialog from '../components/Dialog/Dialog'
 import taskService from '../services/tasks'
 
 import './app.css'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../state/auth'
 import { Navigate } from 'react-router-dom'
 import { Button } from '../components/Button'
 

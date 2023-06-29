@@ -1,4 +1,4 @@
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../state/auth'
 import { Link, Navigate } from 'react-router-dom'
 
 import { Form } from '../components/Form'

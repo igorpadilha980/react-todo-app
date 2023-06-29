@@ -6,7 +6,7 @@ import LoginPage from './pages/LoginPage.jsx'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 
 import './index.css'
-import { AuthProvider } from './contexts/AuthContext.jsx'
+import { AuthProvider } from './state/auth/AuthContext.jsx'
 import { SignUpPage } from './pages/SignUpPage.jsx'
 import SelectStorage from './pages/SelectStorage.jsx'
 

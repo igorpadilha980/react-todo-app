@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../../state/auth'
 
 import style from './Navbar.module.css'
 import { Button } from '../Button';
