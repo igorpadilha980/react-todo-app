@@ -1,27 +1,34 @@
+import { useEffect } from "react";
 import PageLayout from "../components/PageLayout";
 
-import taskService from '../services/tasks'
+import firebaseService from '../services/tasks'
+
 import { useAuth } from "../state/auth";
-import { TaskServiceProvider } from "../state/tasks";
+import { useTaskService } from "../state/tasks";
 
 import { Outlet } from "react-router-dom";
 
 function App() {
     const { user } = useAuth()
-    
-    let service = {
-        fetchTasks: async () => taskService.allTasks(user.id),
-        addTask: async (taskData) => taskService.createTask(user.id, taskData),
-        updateTask: async (taskId, newData) => taskService.updateTask(user.id, taskId, newData),
-        deleteTask: async (taskId) => taskService.deleteTask(user.id, taskId)
-    }
+    const { taskService, setTaskService } = useTaskService()
+
+    useEffect(() => {
+        if (!taskService && user) {
+            let service = {
+                fetchTasks: async () => firebaseService.allTasks(user.id),
+                addTask: async (taskData) => firebaseService.createTask(user.id, taskData),
+                updateTask: async (taskId, newData) => firebaseService.updateTask(user.id, taskId, newData),
+                deleteTask: async (taskId) => firebaseService.deleteTask(user.id, taskId)
+            }
+
+            setTaskService(service)
+        }
+    }, [user])
 
     return (
-        <TaskServiceProvider service={service}>
-            <PageLayout>
-                <Outlet />
-            </PageLayout>
-        </TaskServiceProvider>
+        <PageLayout>
+            <Outlet />
+        </PageLayout>
     )
 }
 

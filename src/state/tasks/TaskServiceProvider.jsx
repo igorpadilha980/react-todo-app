@@ -1,11 +1,11 @@
+import { useState } from 'react'
 import TaskServiceContext from './TaskServiceContext'
 
-function TaskServiceProvider({ service, children }) {
+function TaskServiceProvider({ children }) {
+    const [ taskService, setTaskService ] = useState(null)
+
     return (
-        <TaskServiceContext.Provider value={{
-            ...service,
-            setStatus: async (taskId, status) => service.editTask(taskId, { completed: status })
-        }}>
+        <TaskServiceContext.Provider value={{ taskService, setTaskService }}>
             {children}
         </TaskServiceContext.Provider>
     )

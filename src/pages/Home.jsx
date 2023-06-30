@@ -16,7 +16,7 @@ import { useTaskService } from '../state/tasks'
 function Home() {
   const { isSigned, user } = useAuth()
   const [tasks, setTasks] = useState([])
-  const taskService = useTaskService()
+  const { taskService } = useTaskService()
 
   const [editingTask, setEditingTask] = useState(null)
   const dialogRef = useRef(null)
