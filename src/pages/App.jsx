@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import PageLayout from "../components/PageLayout";
 
-import firebaseService from '../services/tasks'
+import { firebaseTaskService } from "../services/tasks";
 
 import { useAuth } from "../state/auth";
 import { useTaskService } from "../state/tasks";
@@ -12,22 +12,18 @@ function App() {
     const { user } = useAuth()
     const { taskService, setTaskService } = useTaskService()
 
-    useEffect(() => {
-        if (!taskService && user) {
-            let service = {
-                fetchTasks: async () => firebaseService.allTasks(user.id),
-                addTask: async (taskData) => firebaseService.createTask(user.id, taskData),
-                updateTask: async (taskId, newData) => firebaseService.updateTask(user.id, taskId, newData),
-                deleteTask: async (taskId) => firebaseService.deleteTask(user.id, taskId)
-            }
+    const loading = user && !taskService
 
-            setTaskService(service)
-        }
-    }, [user])
+    useEffect(() => {
+        if (loading)
+            setTaskService(firebaseTaskService(user.id))
+    }, [loading])
 
     return (
         <PageLayout>
-            <Outlet />
+            {
+                loading? <h1>Loading...</h1> : <Outlet />
+            }
         </PageLayout>
     )
 }

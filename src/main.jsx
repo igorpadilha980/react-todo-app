@@ -9,6 +9,7 @@ import './index.css'
 import { AuthProvider } from './state/auth/AuthContext.jsx'
 import { SignUpPage } from './pages/SignUpPage.jsx'
 import SelectStorage from './pages/SelectStorage.jsx'
+import TaskServiceProvider from './state/tasks/TaskServiceProvider.jsx'
 
 const router = createHashRouter([
   {
@@ -38,7 +39,9 @@ const router = createHashRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>
-      <RouterProvider router={router}/>
+      <TaskServiceProvider>
+        <RouterProvider router={router} />
+      </TaskServiceProvider>
     </AuthProvider>
   </React.StrictMode>,
 )
