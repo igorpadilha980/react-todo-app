@@ -5,7 +5,6 @@ import TaskList from '../components/TaskList'
 import Dialog from '../components/Dialog/Dialog'
 
 import './app.css'
-import { useAuth } from '../state/auth'
 import { Navigate } from 'react-router-dom'
 import { Button } from '../components/Button'
 
@@ -14,19 +13,18 @@ import { useTaskService } from '../state/tasks'
 
 
 function Home() {
-  const { isSigned, user } = useAuth()
-  const [tasks, setTasks] = useState([])
+  const [ tasks, setTasks ] = useState([])
   const { taskService } = useTaskService()
 
-  const [editingTask, setEditingTask] = useState(null)
+  const [ editingTask, setEditingTask ] = useState(null)
   const dialogRef = useRef(null)
 
-  const fetchTasks = (user, updateFunction) => {
-    if (user)
+  const fetchTasks = (updateFunction) => {
+    if (taskService)
       taskService.fetchTasks().then(updateFunction)
   }
 
-  useEffect(() => fetchTasks(user, setTasks), [user])
+  useEffect(() => fetchTasks(setTasks), [])
 
   useEffect(() => {
     if (!dialogRef.current)
@@ -38,10 +36,8 @@ function Home() {
       dialogRef.current.close()
   }, [editingTask])
 
-  if (!isSigned()) {
-    console.log('Login required to access home')
-    return <Navigate to="/login" />
-  }
+  if (!taskService)
+    return <Navigate to="/" />
 
   const closeForm = () => {
     if (editingTask) {
