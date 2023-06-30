@@ -4,25 +4,27 @@ import TaskForm from '../components/TaskForm'
 import TaskList from '../components/TaskList'
 import Dialog from '../components/Dialog/Dialog'
 
-import taskService from '../services/tasks'
-
 import './app.css'
 import { useAuth } from '../state/auth'
 import { Navigate } from 'react-router-dom'
 import { Button } from '../components/Button'
 
 import AddIcon from '@mui/icons-material/Add';
+import { useTaskService } from '../state/tasks'
 
-function fetchTasks(user, updateFunction) {
-  if (user)
-    taskService.allTasks(user.id).then(updateFunction)
-}
 
 function Home() {
   const { isSigned, user } = useAuth()
   const [tasks, setTasks] = useState([])
+  const taskService = useTaskService()
+
   const [editingTask, setEditingTask] = useState(null)
   const dialogRef = useRef(null)
+
+  const fetchTasks = (user, updateFunction) => {
+    if (user)
+      taskService.fetchTasks().then(updateFunction)
+  }
 
   useEffect(() => fetchTasks(user, setTasks), [user])
 
@@ -53,7 +55,7 @@ function Home() {
     if (editingTask)
       taskChange(editingTask.id, task)
     else {
-      taskService.createTask(user.id, task)
+      taskService.addTask(task)
         .then(createdTask => {
           setTasks([createdTask, ...tasks])
           closeForm()
@@ -62,13 +64,13 @@ function Home() {
   }
 
   const taskChange = (taskId, newData) => {
-    taskService.updateTask(user.id, taskId, newData)
+    taskService.updateTask(taskId, newData)
       .then(() => fetchTasks(user, setTasks))
       .then(closeForm)
   }
 
   const deleteTask = (taskId) => {
-    taskService.deleteTask(user.id, taskId)
+    taskService.deleteTask(taskId)
       .then(() => fetchTasks(user, setTasks))
   }
 
