@@ -42,7 +42,7 @@ function SignUpPage() {
                     </FormInput>
 
                     <Button className={actionButton}>Register</Button>
-                    <span className={additionalLink}>Already have an account? Login <Link to="/signup">here</Link></span>
+                    <span className={additionalLink}>Already have an account? Login <Link to="/login">here</Link></span>
                 </Form>
             </section>
         </>
