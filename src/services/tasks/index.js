@@ -1,4 +1,5 @@
 import firebaseService from './firebaseTasks'
+import localService from './localTasks'
 
 function firebaseTaskService(userId) {
     return {
@@ -10,6 +11,11 @@ function firebaseTaskService(userId) {
     }
 }
 
+function localTaskService() {
+    return localService
+}
+
 export {
-    firebaseTaskService
+    firebaseTaskService,
+    localTaskService
 }

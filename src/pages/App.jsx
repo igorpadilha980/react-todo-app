@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import PageLayout from "../components/PageLayout";
 
-import { firebaseTaskService } from "../services/tasks";
+import { firebaseTaskService, localTaskService } from "../services/tasks";
 
 import { useAuth } from "../state/auth";
 import { useTaskService } from "../state/tasks";
@@ -16,7 +16,7 @@ function App() {
 
     useEffect(() => {
         if (loading)
-            setTaskService(firebaseTaskService(user.id))
+            setTaskService(localTaskService())
     }, [loading])
 
     return (
