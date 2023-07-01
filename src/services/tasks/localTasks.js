@@ -3,7 +3,7 @@ let tasks = {}
 function loadTasks() {
     let tasksJson = localStorage.getItem('tasks')
 
-    return tasksJson? JSON.parse(tasksJson) : {}
+    return tasksJson ? JSON.parse(tasksJson) : {}
 }
 
 function syncStorage() {
@@ -34,8 +34,10 @@ async function deleteTask(taskId) {
     delete tasks[taskId]
 }
 
-tasks = loadTasks()
-setInterval(syncStorage, 1000)
+if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
+    tasks = loadTasks()
+    setInterval(syncStorage, 1000)
+}
 
 export default {
     fetchTasks,
