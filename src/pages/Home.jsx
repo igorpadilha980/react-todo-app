@@ -61,13 +61,13 @@ function Home() {
 
   const taskChange = (taskId, newData) => {
     taskService.updateTask(taskId, newData)
-      .then(() => fetchTasks(user, setTasks))
+      .then(() => fetchTasks(setTasks))
       .then(closeForm)
   }
 
   const deleteTask = (taskId) => {
     taskService.deleteTask(taskId)
-      .then(() => fetchTasks(user, setTasks))
+      .then(() => fetchTasks(setTasks))
   }
 
   return (
