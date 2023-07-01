@@ -1,9 +1,3 @@
-.page-layout {
-    display: flex;
-
-    flex-direction: column;
-}
-
 .tasks-display {
     margin: 0 auto;
     margin-top: 20px; 

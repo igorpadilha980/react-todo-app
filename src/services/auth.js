@@ -4,7 +4,7 @@ import { createUser, fetchUser } from './user.js'
 
 async function login(email, password) {
     return signInWithEmailAndPassword(auth, email, password)
-            .then(credential => fetchUser(credential.user.uid))
+        .then(credential => fetchUser(credential.user.uid))
 }
 
 async function logout() {
@@ -16,12 +16,21 @@ async function registerUser(username, email, password) {
         .then((credential) => createUser(credential.user.uid, username, email))
 }
 
+let firstLoad = true;
+
 function watchAuthChange(callback) {
     return onAuthStateChanged(auth, (user) => {
-        if (user)
-            fetchUser(user.uid).then(callback)
+        if (firstLoad) {
+            firstLoad = false;
+            callback(undefined)
+        }
 
-        console.log({ user })
+        if (user) {
+            fetchUser(user.uid).then(callback)
+            return
+        }
+
+        callback(null)
     })
 }
 

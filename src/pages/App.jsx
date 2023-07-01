@@ -1,100 +1,31 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from "react";
+import PageLayout from "../components/PageLayout";
 
-import Navbar from '../components/Navbar'
-import TaskForm from '../components/TaskForm'
-import TaskList from '../components/TaskList'
-import Dialog from '../components/Dialog/Dialog'
+import { firebaseTaskService, localTaskService } from "../services/tasks";
 
-import taskService from '../services/tasks'
+import { useAuth } from "../state/auth";
+import { useTaskService } from "../state/tasks";
 
-import './app.css'
-import { useAuth } from '../contexts/AuthContext'
-import { Navigate } from 'react-router-dom'
-import { Button } from '../components/Button'
-
-import AddIcon from '@mui/icons-material/Add';
-
-function fetchTasks(user, updateFunction) {
-  if (user)
-    taskService.allTasks(user.id).then(updateFunction)
-}
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const { isSigned, user } = useAuth()
-  const [tasks, setTasks] = useState([])
-  const [editingTask, setEditingTask] = useState(null)
-  const dialogRef = useRef(null)
+    const { user } = useAuth()
+    const { taskService, setTaskService } = useTaskService()
 
-  useEffect(() => fetchTasks(user, setTasks), [user])
+    const loading = user && !taskService
 
-  useEffect(() => {
-    if (!dialogRef.current)
-      return
+    useEffect(() => {
+        if (loading)
+            setTaskService(localTaskService())
+    }, [loading])
 
-    if (editingTask)
-      dialogRef.current.openModal()
-    else
-      dialogRef.current.close()
-  }, [editingTask])
-
-  if (!isSigned()) {
-    console.log('Login required to access home')
-    return <Navigate to="/login" />
-  }
-
-  const closeForm = () => {
-    if (editingTask){
-      setEditingTask(null)
-    }
-
-    dialogRef.current.close()
-  }
-
-  const submitForm = (task) => {
-    if (editingTask)
-      taskChange(editingTask.id, task)
-    else {
-      taskService.createTask(user.id, task)
-        .then(createdTask => {
-          setTasks([createdTask, ...tasks])
-          closeForm()
-        })
-    }
-  }
-
-  const taskChange = (taskId, newData) => {
-    taskService.updateTask(user.id, taskId, newData)
-      .then(() => fetchTasks(user, setTasks))
-      .then(closeForm)
-  }
-
-  const deleteTask = (taskId) => {
-    taskService.deleteTask(user.id, taskId)
-      .then(() => fetchTasks(user, setTasks))
-  }
-
-  return (
-    <section className='page-layout'>
-      <Navbar />
-
-      <Dialog ref={dialogRef} closeAction={closeForm} className="task-dialog">
-        <TaskForm
-          title={editingTask ? "Edit task" : "New task"}
-          submitText={editingTask ? "Save changes" : "Save"}
-          data={editingTask}
-          onSubmit={submitForm} />
-      </Dialog>
-
-      <main className="tasks-display">
-        <Button action={() => dialogRef.current.openModal()} round paddingRight="10px"><AddIcon /> New</Button>
-        <TaskList 
-          tasks={tasks} 
-          updateTaskStatus={(id, completed) => taskChange(id, { completed })} 
-          onRemoveTask={deleteTask} 
-          onEditTask={setEditingTask} />
-      </main>
-    </section>
-  )
+    return (
+        <PageLayout>
+            {
+                loading? <h1>Loading...</h1> : <Outlet />
+            }
+        </PageLayout>
+    )
 }
 
 export default App
